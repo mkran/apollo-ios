@@ -122,13 +122,8 @@ open class URLSessionClient: NSObject, URLSessionDelegate, URLSessionTaskDelegat
       return URLSessionTask()
     }
     
-//    let task = self.session.dataTask(with: request)
-		let data = Data("blah balh".utf8)
-		let tmpDirURL = URL(fileURLWithPath: NSTemporaryDirectory())
-    let localURL = tmpDirURL.appendingPathComponent("throwaway")
-		try? data.write(to: localURL)
+    let task = self.session.dataTask(with: request)
 		
-		let task = self.session.uploadTask(with: request, fromFile: localURL)
     let taskData = TaskData(rawCompletion: rawTaskCompletionHandler,
                             completionBlock: completion)
     
