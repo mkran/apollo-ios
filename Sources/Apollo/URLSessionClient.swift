@@ -122,7 +122,9 @@ open class URLSessionClient: NSObject, URLSessionDelegate, URLSessionTaskDelegat
       return URLSessionTask()
     }
     
-    let task = self.session.dataTask(with: request)
+//    let task = self.session.dataTask(with: request)
+		let data = Data("blah balh".utf8)
+		let task = self.session.uploadTask(with: request, from: data)
     let taskData = TaskData(rawCompletion: rawTaskCompletionHandler,
                             completionBlock: completion)
     
