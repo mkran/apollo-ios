@@ -36,7 +36,7 @@ open class URLSessionClient: NSObject, URLSessionDelegate, URLSessionTaskDelegat
 		}
 	}
 	
-//	weak public var delegate: URLSessionDelegate?
+	weak public var delegate: URLSessionDelegate?
 	
 	/// A completion block to be called when the raw task has completed, with the raw information from the session
 	public typealias RawCompletion = (Data?, HTTPURLResponse?, Error?) -> Void
@@ -63,11 +63,11 @@ open class URLSessionClient: NSObject, URLSessionDelegate, URLSessionTaskDelegat
 	public init(sessionConfiguration: URLSessionConfiguration = .default,
 							callbackQueue: OperationQueue? = .main) {
 		super.init()
-//		if self.delegate == nil{
-//			self.delegate = self
-//		}
+		if self.delegate == nil{
+			self.delegate = self
+		}
 		self.session = URLSession(configuration: sessionConfiguration,
-															delegate: self,
+															delegate: self.delegate,
 															delegateQueue: callbackQueue)
 	}
 	
@@ -127,23 +127,17 @@ open class URLSessionClient: NSObject, URLSessionDelegate, URLSessionTaskDelegat
 			return URLSessionTask()
 		}
 		
-//    let task = self.session.dataTask(with: request)
-		let data = request.httpBody
-//		var tempDir: URL
-		let tempDir = URL(fileURLWithPath: NSTemporaryDirectory())
-//		if #available(iOSApplicationExtension 10.0, *) {
-//			tempDir = FileManager.default.temporaryDirectory
-//		} else {
-//			// Fallback on earlier versions
-//			tempDir = URL(fileURLWithPath: NSTemporaryDirectory())
-//		}
-		let localURL = tempDir.appendingPathComponent("tmp")
-		try? data!.write(to: localURL)
-		let task = self.session.uploadTask(with: request, fromFile: localURL)
+    let task = self.session.dataTask(with: request)
+		
+//		let data = request.httpBody
+//		let tempDir = URL(fileURLWithPath: NSTemporaryDirectory())
+//		let localURL = tempDir.appendingPathComponent("tmp")
+//		try? data!.write(to: localURL)
+//		let task = self.session.uploadTask(with: request, fromFile: localURL)
 		
 		let taskData = TaskData(rawCompletion: rawTaskCompletionHandler,
 														completionBlock: completion)
-		
+
 		self.tasks.mutate { $0[task.taskIdentifier] = taskData }
 		
 		task.resume()
@@ -221,6 +215,7 @@ open class URLSessionClient: NSObject, URLSessionDelegate, URLSessionTaskDelegat
 		let response = taskData.response
 		print(data)
 		print(response)
+		print(task.taskIdentifier)
 		
 		if let rawCompletion = taskData.rawCompletion {
 			rawCompletion(data, response, error)
