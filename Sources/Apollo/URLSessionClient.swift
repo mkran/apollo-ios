@@ -129,13 +129,14 @@ open class URLSessionClient: NSObject, URLSessionDelegate, URLSessionTaskDelegat
 		
 //    let task = self.session.dataTask(with: request)
 		let data = request.httpBody
-		var tempDir: URL
-		if #available(iOSApplicationExtension 10.0, *) {
-			tempDir = FileManager.default.temporaryDirectory
-		} else {
-			// Fallback on earlier versions
-			tempDir = URL(fileURLWithPath: NSTemporaryDirectory())
-		}
+//		var tempDir: URL
+		let tempDir = URL(fileURLWithPath: NSTemporaryDirectory())
+//		if #available(iOSApplicationExtension 10.0, *) {
+//			tempDir = FileManager.default.temporaryDirectory
+//		} else {
+//			// Fallback on earlier versions
+//			tempDir = URL(fileURLWithPath: NSTemporaryDirectory())
+//		}
 		let localURL = tempDir.appendingPathComponent("tmp")
 		try? data!.write(to: localURL)
 		let task = self.session.uploadTask(with: request, fromFile: localURL)
