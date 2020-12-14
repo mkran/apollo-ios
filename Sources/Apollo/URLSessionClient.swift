@@ -219,6 +219,8 @@ open class URLSessionClient: NSObject, URLSessionDelegate, URLSessionTaskDelegat
 		
 		let data = taskData.data
 		let response = taskData.response
+		print(data)
+		print(response)
 		
 		if let rawCompletion = taskData.rawCompletion {
 			rawCompletion(data, response, error)
