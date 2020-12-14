@@ -36,7 +36,7 @@ open class URLSessionClient: NSObject, URLSessionDelegate, URLSessionTaskDelegat
 		}
 	}
 	
-	weak public var delegate: URLSessionDelegate?
+//	weak public var delegate: URLSessionDelegate?
 	
 	/// A completion block to be called when the raw task has completed, with the raw information from the session
 	public typealias RawCompletion = (Data?, HTTPURLResponse?, Error?) -> Void
@@ -63,11 +63,11 @@ open class URLSessionClient: NSObject, URLSessionDelegate, URLSessionTaskDelegat
 	public init(sessionConfiguration: URLSessionConfiguration = .default,
 							callbackQueue: OperationQueue? = .main) {
 		super.init()
-		if self.delegate == nil{
-			self.delegate = self
-		}
+//		if self.delegate == nil{
+//			self.delegate = self
+//		}
 		self.session = URLSession(configuration: sessionConfiguration,
-															delegate: self.delegate,
+															delegate: self,
 															delegateQueue: callbackQueue)
 	}
 	
