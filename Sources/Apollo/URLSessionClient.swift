@@ -36,7 +36,7 @@ open class URLSessionClient: NSObject, URLSessionDelegate, URLSessionTaskDelegat
 		}
 	}
 	
-	weak public var delegate: URLSessionDelegate?
+//	weak public var delegate: URLSessionDelegate?
 	
 	/// A completion block to be called when the raw task has completed, with the raw information from the session
 	public typealias RawCompletion = (Data?, HTTPURLResponse?, Error?) -> Void
@@ -55,20 +55,36 @@ open class URLSessionClient: NSObject, URLSessionDelegate, URLSessionTaskDelegat
 		!self.hasBeenInvalidated.value
 	}
 	
+//	public func setDelegate(delegate: URLSessionDelegate) {
+//		self.delegate = delegate
+//	}
+	
 	/// Designated initializer.
 	///
 	/// - Parameters:
 	///   - sessionConfiguration: The `URLSessionConfiguration` to use to set up the URL session.
 	///   - callbackQueue: [optional] The `OperationQueue` to tell the URL session to call back to this class on, which will in turn call back to your class. Defaults to `.main`.
 	public init(sessionConfiguration: URLSessionConfiguration = .default,
-							callbackQueue: OperationQueue? = .main) {
+							callbackQueue: OperationQueue? = .main, delegate: URLSessionDelegate? = nil) {
 		super.init()
-		if self.delegate == nil{
-			self.delegate = self
+		
+		if delegate == nil {
+			self.session = URLSession(configuration: sessionConfiguration,
+																delegate: self,
+																delegateQueue: callbackQueue)
+		} else {
+			self.session = URLSession(configuration: sessionConfiguration,
+																delegate: delegate,
+																delegateQueue: callbackQueue)
 		}
-		self.session = URLSession(configuration: sessionConfiguration,
-															delegate: self.delegate,
-															delegateQueue: callbackQueue)
+//
+//		self.session = URLSession(configuration: sessionConfiguration,
+//															delegate: self.delegate,
+//															delegateQueue: callbackQueue)
+		
+//		self.session = URLSession(configuration: sessionConfiguration,
+//															delegate: delegate,
+//															delegateQueue: callbackQueue)
 	}
 	
 	/// Cleans up and invalidates everything related to this session client.
@@ -213,9 +229,9 @@ open class URLSessionClient: NSObject, URLSessionDelegate, URLSessionTaskDelegat
 		
 		let data = taskData.data
 		let response = taskData.response
-		print(data)
-		print(response)
-		print(task.taskIdentifier)
+//		print(data)
+//		print(response)
+//		print(task.taskIdentifier)
 		
 		if let rawCompletion = taskData.rawCompletion {
 			rawCompletion(data, response, error)
