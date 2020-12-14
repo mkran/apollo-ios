@@ -77,13 +77,9 @@ open class URLSessionClient: NSObject, URLSessionDelegate, URLSessionTaskDelegat
 																delegate: delegate,
 																delegateQueue: callbackQueue)
 		}
-//
+
 //		self.session = URLSession(configuration: sessionConfiguration,
-//															delegate: self.delegate,
-//															delegateQueue: callbackQueue)
-		
-//		self.session = URLSession(configuration: sessionConfiguration,
-//															delegate: delegate,
+//															delegate: self,
 //															delegateQueue: callbackQueue)
 	}
 	
