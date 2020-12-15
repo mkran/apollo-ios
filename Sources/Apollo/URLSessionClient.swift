@@ -48,6 +48,7 @@ open class URLSessionClient: NSObject, URLSessionDelegate, URLSessionTaskDelegat
 	
 	/// The raw URLSession being used for this client
 	open private(set) var session: URLSession!
+//	open var session: URLSession!
 	
 	private var hasBeenInvalidated = Atomic<Bool>(false)
 	
@@ -329,3 +330,94 @@ open class URLSessionClient: NSObject, URLSessionDelegate, URLSessionTaskDelegat
 		}
 	}
 }
+
+//class MyURLSessionClient: URLSessionClient {
+//
+////	/// Designated initializer.
+////	///
+////	/// - Parameters:
+////	///   - sessionConfiguration: The `URLSessionConfiguration` to use to set up the URL session.
+////	///   - callbackQueue: [optional] The `OperationQueue` to tell the URL session to call back to this class on, which will in turn call back to your class. Defaults to `.main`.
+////	override init(sessionConfiguration: URLSessionConfiguration = .default,
+////				callbackQueue: OperationQueue? = .main) {
+////	  super.init()
+////	  self.session = URLSession(configuration: sessionConfiguration,
+////								delegate: self,
+////								delegateQueue: callbackQueue)
+////	}
+////	init(fts: FileTransferService) {
+////		super.init()
+////		self.delgate = fts  //Reference in FTS needs to be weak or unowned reference
+////
+////
+////	}
+//
+//		override init(sessionConfiguration: URLSessionConfiguration = .default, callbackQueue: OperationQueue? = .main) {
+//			super.init()
+//			self.session.delegate = nil
+//		}
+//
+//	/// The main method to perform a request.
+//	///
+//	/// - Parameters:
+//	///   - request: The request to perform.
+//	///   - rawTaskCompletionHandler: [optional] A completion handler to call once the raw task is done, so if an Error requires access to the headers, the user can still access these.
+//	///   - completion: A completion handler to call when the task has either completed successfully or failed.
+//	///
+//	/// - Returns: The created URLSession task, already resumed, because nobody ever remembers to call `resume()`.
+//	@discardableResult
+//	override func sendRequest(_ request: URLRequest,
+//							rawTaskCompletionHandler: RawCompletion? = nil,
+//							completion: @escaping Completion) -> URLSessionTask {
+//
+////		let task = self.session.dataTask(with: request)
+//		let data = request.httpBody
+////		let tempDir = FileManager.default.temporaryDirectory
+//		let tempDir = URL(fileURLWithPath: NSTemporaryDirectory())
+//		let localURL = tempDir.appendingPathComponent("throwaway")
+//		try? data!.write(to: localURL)
+//		let task = self.session.uploadTask(with: request, fromFile: localURL)
+//
+//
+////		let taskData = TaskData(rawCompletion: rawTaskCompletionHandler,
+////								completionBlock: completion)
+//		task.resume()
+//
+//		return task
+//	}
+//
+////	override func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+////		gqllogger.error("Completed with error2: \(error.debugDescription)")
+////	}
+//
+////	override func urlSession(_ session: URLSession, didBecomeInvalidWithError error: Error?) {
+////		gqllogger.error("URL session became invalid with error: \(error.debugDescription)")
+////	}
+////
+//
+////	override func urlSession(_ session: URLSession, task: URLSessionTask, didSendBodyData bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64) {
+////		gqllogger.info("Progress2: \((Float(totalBytesSent)/Float(totalBytesExpectedToSend))*100)%")
+////	}
+////
+////	override func urlSessionDidFinishEvents(forBackgroundURLSession: URLSession){
+////		gqllogger.info("Background URL session has been completed!")
+////	}
+////
+////	override func urlSession(_ session: URLSession, taskIsWaitingForConnectivity: URLSessionTask){
+////		gqllogger.info("Upload task is waiting until suitable connectivity is available..")
+////	}
+//
+//	override func urlSession(_ session: URLSession,
+//						 dataTask: URLSessionDataTask,
+//						 didReceive data: Data) {
+////	  self.tasks.mutate {
+////		guard let taskData = $0[dataTask.taskIdentifier] else {
+////		  assertionFailure("No data found for task \(dataTask.taskIdentifier), cannot append received data")
+////		  return
+////		}
+////
+////		taskData.append(additionalData: data)
+////	  }
+//	}
+//}
+
