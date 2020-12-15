@@ -173,6 +173,8 @@ open class URLSessionClient: NSObject, URLSessionDelegate, URLSessionTaskDelegat
 	// MARK: - URLSessionDelegate
 	
 	open func urlSession(_ session: URLSession, didBecomeInvalidWithError error: Error?) {
+		print("urlSession(_ session: URLSession, didBecomeInvalidWithError error: Error?)")
+		
 		let finalError = error ?? URLSessionClientError.sessionBecameInvalidWithoutUnderlyingError
 		for task in self.tasks.value.values {
 			task.completionBlock(.failure(finalError))
@@ -186,6 +188,7 @@ open class URLSessionClient: NSObject, URLSessionDelegate, URLSessionTaskDelegat
 											 task: URLSessionTask,
 											 didFinishCollecting metrics: URLSessionTaskMetrics) {
 		// No default implementation
+		print("func urlSession(_ session: URLSession, task: URLSessionTask, didFinishCollecting metrics: URLSessionTaskMetrics)")
 	}
 	
 	open func urlSession(_ session: URLSession,
@@ -217,6 +220,8 @@ open class URLSessionClient: NSObject, URLSessionDelegate, URLSessionTaskDelegat
 	open func urlSession(_ session: URLSession,
 											 task: URLSessionTask,
 											 didCompleteWithError error: Error?) {
+		print("urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?)")
+		
 		defer {
 			self.clear(task: task.taskIdentifier)
 		}
