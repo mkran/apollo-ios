@@ -73,10 +73,12 @@ open class URLSessionClient: NSObject, URLSessionDelegate, URLSessionTaskDelegat
 			self.session = URLSession(configuration: sessionConfiguration,
 																delegate: self,
 																delegateQueue: callbackQueue)
+			print("delegate is nil")
 		} else {
 			self.session = URLSession(configuration: sessionConfiguration,
 																delegate: delegate,
 																delegateQueue: callbackQueue)
+			print("delegate is not nil")
 		}
 
 //		self.session = URLSession(configuration: sessionConfiguration,
